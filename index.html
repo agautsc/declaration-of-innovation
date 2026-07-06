@@ -299,11 +299,46 @@
           </form>
         </div>
       </section>
+
+      <section id="badge" class="badge-section" aria-labelledby="badge-title">
+        <div class="section-heading">
+          <p class="kicker">Signed it? Say so</p>
+          <h2 id="badge-title">Put It In Your Footer</h2>
+        </div>
+        <div class="badge-layout">
+          <div>
+            <p>
+              One quiet line for the bottom of your site. It carries the opening words of the
+              declaration and links back here, so the next community can find the door. Copy it
+              as-is — it inherits your site's fonts and colors — and it looks the same wherever
+              signatories put it.
+            </p>
+            <div class="badge-preview">
+              <p class="badge-preview-label">How it looks</p>
+              <div class="badge-preview-frame">
+                <p style="margin: 1.5em 0 0; font-size: 0.9em;">
+                  <em>&#8220;When it becomes necessary to strengthen the community bonds&#8230;&#8221;</em>
+                  &#8212; <a href="https://agautsc.github.io/declaration-of-innovation/" style="color: inherit;">signatory of the Declaration of Innovation</a>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="badge-code-panel">
+            <pre class="badge-code"><code id="badge-snippet">&lt;!-- Declaration of Innovation — signatory footer --&gt;
+&lt;p style="margin: 1.5em 0 0; font-size: 0.9em;"&gt;
+  &lt;em&gt;&amp;#8220;When it becomes necessary to strengthen the community bonds&amp;#8230;&amp;#8221;&lt;/em&gt;
+  &amp;#8212; &lt;a href="https://agautsc.github.io/declaration-of-innovation/" style="color: inherit;"&gt;signatory of the Declaration of Innovation&lt;/a&gt;
+&lt;/p&gt;</code></pre>
+            <button class="button primary" id="copy-badge" type="button">Copy the Snippet</button>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
       <p>Copy, adapt, sign, and improve. Licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
       <div class="footer-links">
+        <a href="#badge">Signatory footer</a>
         <a href="declaration.md">Markdown draft</a>
         <a href="https://github.com/agautsc/declaration-of-innovation">Fork on GitHub →</a>
       </div>
@@ -323,6 +358,29 @@
           '?title=' + encodeURIComponent(title) +
           '&body=' + encodeURIComponent(body);
         window.open(url, '_blank', 'noopener');
+      });
+
+      document.getElementById('copy-badge').addEventListener('click', function () {
+        var button = this;
+        var snippet = document.getElementById('badge-snippet').textContent;
+        function confirmCopied() {
+          button.textContent = 'Copied';
+          setTimeout(function () { button.textContent = 'Copy the Snippet'; }, 2000);
+        }
+        function legacyCopy() {
+          var scratch = document.createElement('textarea');
+          scratch.value = snippet;
+          document.body.appendChild(scratch);
+          scratch.select();
+          document.execCommand('copy');
+          document.body.removeChild(scratch);
+          confirmCopied();
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(snippet).then(confirmCopied, legacyCopy);
+        } else {
+          legacyCopy();
+        }
       });
     </script>
   </body>

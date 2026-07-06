@@ -31,6 +31,18 @@ We'll add you to the site.
 
 Individual signatures work the same way — use the form on the site, or [open a GitHub issue](https://github.com/agautsc/declaration-of-innovation/issues/new?template=sign.yml) with your name, location, and the bond you are strengthening.
 
+## Show It
+
+Signatories can add a one-line footer to their site. Copy it as-is — it inherits your site's fonts and colors:
+
+```html
+<!-- Declaration of Innovation — signatory footer -->
+<p style="margin: 1.5em 0 0; font-size: 0.9em;">
+  <em>&#8220;When it becomes necessary to strengthen the community bonds&#8230;&#8221;</em>
+  &#8212; <a href="https://agautsc.github.io/declaration-of-innovation/" style="color: inherit;">signatory of the Declaration of Innovation</a>
+</p>
+```
+
 ## License
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Copy, adapt, sign, and improve — just keep a line crediting the Declaration of Innovation.

@@ -622,6 +622,63 @@ textarea {
   resize: vertical;
 }
 
+.badge-section {
+  padding: clamp(64px, 10vw, 120px) clamp(20px, 6vw, 96px);
+  border-top: 1px solid var(--line);
+}
+
+.badge-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.55fr) minmax(320px, 0.45fr);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: start;
+}
+
+.badge-layout > div > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.08rem;
+}
+
+.badge-preview {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.badge-preview-label {
+  margin: 0;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.badge-preview-frame {
+  padding: 8px 24px 24px;
+  color: var(--muted);
+}
+
+.badge-code {
+  margin: 0 0 16px;
+  padding: 20px 24px;
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--line);
+  outline-offset: 5px;
+  background: var(--surface);
+  font-family: ui-monospace, 'Cascadia Code', 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
 .site-footer {
   display: flex;
   flex-wrap: wrap;
@@ -688,7 +745,8 @@ textarea {
   .document-shell,
   .adapt-layout,
   .sign-content,
-  .examples-grid {
+  .examples-grid,
+  .badge-layout {
     grid-template-columns: 1fr;
   }
 
