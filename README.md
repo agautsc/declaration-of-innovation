@@ -6,7 +6,7 @@ The Declaration of Innovation is an open, remixable community charter for groups
 
 ## Use It
 
-- Read the declaration: [agautsc.github.io/declaration-of-innovation](https://agautsc.github.io/declaration-of-innovation/)
+- Read the declaration: [declarationofinnovation.org](https://declarationofinnovation.org/)
 - Download the markdown template: [`declaration.md`](declaration.md)
 
 ## Adapt It
@@ -39,7 +39,7 @@ Signatories can add a one-line footer to their site. Copy it as-is — it inheri
 <!-- Declaration of Innovation — signatory footer -->
 <p style="margin: 1.5em 0 0; font-size: 0.9em;">
   <em>&#8220;When it becomes necessary to strengthen the community bonds&#8230;&#8221;</em>
-  &#8212; <a href="https://agautsc.github.io/declaration-of-innovation/" style="color: inherit;">signatory of the Declaration of Innovation</a>
+  &#8212; <a href="https://declarationofinnovation.org/" style="color: inherit;">signatory of the Declaration of Innovation</a>
 </p>
 ```
 
