@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#f5ede0"/>
+  <text x="32" y="45" text-anchor="middle" font-family="Georgia, 'Playfair Display', serif" font-size="42" font-weight="700" font-style="italic" fill="#1d1c18">D</text>
+  <path d="M15 53 C 25 50, 41 50, 51 53" stroke="#a03f2d" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</svg>

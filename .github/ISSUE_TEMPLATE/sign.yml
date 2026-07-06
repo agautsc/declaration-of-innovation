@@ -1,0 +1,26 @@
+name: Sign the Declaration
+description: Add your signature as a person, meetup, project, venue, chapter, or event.
+title: "Signature: "
+labels: ["signature"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name or community
+      placeholder: Mondaiy Coffee
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      placeholder: Atlanta, GA
+    validations:
+      required: true
+  - type: textarea
+    id: commitment
+    attributes:
+      label: What bond are you strengthening?
+      placeholder: We gather to make the first step easier.
+    validations:
+      required: true

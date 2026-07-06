@@ -1,0 +1,36 @@
+name: Add Your Community
+description: Your community has adopted the declaration — get listed on the site.
+title: "Community: "
+labels: ["community"]
+body:
+  - type: input
+    id: community
+    attributes:
+      label: Community name
+      placeholder: Mondaiy Coffee
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      placeholder: Atlanta, GA
+    validations:
+      required: true
+  - type: input
+    id: description
+    attributes:
+      label: One-line description
+      placeholder: Weekly AI coffee for builders, neighbors, and the curious.
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Link (optional)
+      placeholder: https://www.mondaiycoffee.com
+  - type: textarea
+    id: adaptation
+    attributes:
+      label: Your adaptation (optional)
+      description: Paste your local preamble or commitments, or link to your adapted declaration.
