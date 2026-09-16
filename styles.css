@@ -636,6 +636,12 @@ textarea {
   align-items: start;
 }
 
+/* Grid children default to min-width: auto, so the unbreakable URL in the code
+   sample widened the page on phones. Let both columns shrink. */
+.badge-layout > * {
+  min-width: 0;
+}
+
 .badge-layout > div > p {
   margin: 0;
   color: var(--muted);
@@ -663,6 +669,7 @@ textarea {
 .badge-preview-frame {
   padding: 8px 24px 24px;
   color: var(--muted);
+  overflow-wrap: anywhere;
 }
 
 .badge-code {
@@ -676,7 +683,8 @@ textarea {
   font-size: 0.78rem;
   line-height: 1.6;
   white-space: pre-wrap;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+  overflow-x: auto;
 }
 
 .site-footer {
