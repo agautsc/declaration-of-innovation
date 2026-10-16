@@ -20,6 +20,21 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Jump links land below the sticky header (81px on desktop, 88px once it stacks below 900px). */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+h3[id] {
+  scroll-margin-top: 112px;
+}
+
+@media (max-width: 900px) {
+  section[id] {
+    scroll-margin-top: 87px;
+  }
+}
+
 body {
   margin: 0;
   background: var(--paper);
@@ -274,7 +289,7 @@ h3 {
 
 .content-grid p:not(.large-text),
 .adapt-layout p,
-.sign-content p {
+.sign-intro p:not(.kicker) {
   margin: 0;
   color: var(--muted);
   font-size: 1.08rem;
@@ -547,34 +562,15 @@ h3 {
   align-items: start;
 }
 
-.sign-content .kicker,
-.sign-content h2,
-.sign-content > p {
-  grid-column: 1;
+.sign-intro h2 {
+  margin-bottom: 24px;
 }
 
-.community-adopt {
-  grid-column: 1;
-  padding: 20px;
-  border: 1px solid var(--line);
-  background: var(--paper);
-}
-
-.community-adopt-label {
-  margin: 0 0 6px;
-  font-weight: 700;
-  font-size: 0.94rem;
-}
-
-.community-adopt-desc {
-  margin: 0 0 14px;
-  color: var(--muted);
-  font-size: 0.92rem;
+.sign-intro p:not(.kicker) + p {
+  margin-top: 16px;
 }
 
 .sign-form {
-  grid-column: 2;
-  grid-row: 1 / span 4;
   display: grid;
   gap: 16px;
   padding: 24px;
@@ -582,10 +578,144 @@ h3 {
   background: var(--paper);
 }
 
+.sign-kind {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.sign-kind legend {
+  width: 100%;
+  margin-bottom: 8px;
+  padding: 0;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+label.choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-text);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+
+label.choice input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--accent);
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Honeypot: hidden from people and screen readers, filled in by naive bots. */
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
+}
+
+.sign-status {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.sign-status:empty {
+  display: none;
+}
+
+.sign-status.is-ok,
+.sign-status.is-error {
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+
+.sign-status.is-error {
+  color: var(--accent-dark);
+}
+
 .sign-note {
   margin: 0;
   color: var(--muted);
   font-size: 0.85rem;
+}
+
+.sign-note a {
+  color: var(--accent);
+}
+
+.signatories-section {
+  padding: clamp(64px, 10vw, 120px) clamp(20px, 6vw, 96px);
+  border-top: 1px solid var(--line);
+}
+
+.signatories-list {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0 40px;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.signatory {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.signatory-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+a.signatory-name {
+  display: inline-block;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.signatory-meta {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.signatory-statement {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
 }
 
 label {
@@ -760,14 +890,5 @@ textarea {
 
   .document-heading {
     position: static;
-  }
-
-  .sign-content .kicker,
-  .sign-content h2,
-  .sign-content > p,
-  .community-adopt,
-  .sign-form {
-    grid-column: auto;
-    grid-row: auto;
   }
 }

@@ -1,0 +1,9 @@
+name = "declaration-sign"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+REPO = "agautsc/declaration-of-innovation"
+ALLOWED_ORIGINS = "https://declarationofinnovation.org"
+
+# GITHUB_TOKEN is a secret, set with `npx wrangler secret put GITHUB_TOKEN` (see README.md).
