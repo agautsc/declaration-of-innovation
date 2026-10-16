@@ -16,20 +16,15 @@ Fork this repo, copy `declaration.md`, and add your community's local commitment
 - [`examples/mondaiy-coffee.md`](examples/mondaiy-coffee.md) — Weekly AI coffee in Atlanta, GA
 - [`examples/free-parking.md`](examples/free-parking.md) — Monthly CEO peer circle in Atlanta, GA
 
-## Add Your Community
-
-If your community has adopted the declaration, [open a GitHub issue](https://github.com/agautsc/declaration-of-innovation/issues/new?template=add-community.yml) with:
-
-- Community name
-- Location
-- One-line description
-- Link (optional)
-
-We'll add you to the site.
-
 ## Sign It
 
-Individual signatures work the same way — use the form on the site, or [open a GitHub issue](https://github.com/agautsc/declaration-of-innovation/issues/new?template=sign.yml) with your name, location, and the bond you are strengthening.
+Use the [form on the site](https://declarationofinnovation.org/#sign). No account is needed. Sign as a person, or as a community or group to join the communities list. Add your name, location, one sentence about the bond you are strengthening, and a link if you like.
+
+If you prefer GitHub, open an issue instead: [sign as a person](https://github.com/agautsc/declaration-of-innovation/issues/new?template=sign.yml) or [add your community](https://github.com/agautsc/declaration-of-innovation/issues/new?template=add-community.yml).
+
+### How signatures get published
+
+Every signature becomes a GitHub issue labeled `signature` or `community`. Form signatures are filed by the endpoint in [`worker/`](worker/). A maintainer adds the `approved` label, and the [Sync signatures](.github/workflows/sync-signatures.yml) workflow rebuilds `signatures.json`, which the site reads. To take a signature down, remove the label.
 
 ## Show It
 

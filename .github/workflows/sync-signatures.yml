@@ -1,0 +1,36 @@
+name: Sync signatures
+
+# Adding the `approved` label to a signature or community issue publishes it on the site.
+on:
+  issues:
+    types: [labeled, unlabeled, edited, deleted]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: read
+
+concurrency:
+  group: sync-signatures
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.label.name == 'approved' ||
+      contains(github.event.issue.labels.*.name, 'approved')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        with:
+          script: await require('./.github/scripts/sync-signatures.js')({ github, context })
+      - name: Commit if changed
+        run: |
+          git diff --quiet -- signatures.json && exit 0
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add signatures.json
+          git commit -m 'Sync signatures from approved issues'
+          git push

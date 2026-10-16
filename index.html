@@ -12,7 +12,12 @@
     <meta property="og:title" content="Declaration of Innovation">
     <meta property="og:description" content="A declaration for people who gather to make, and make things better.">
     <meta property="og:url" content="https://declarationofinnovation.org/">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://declarationofinnovation.org/og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Declaration of Innovation: It has become necessary to strengthen our community bonds.">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://declarationofinnovation.org/">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -250,7 +255,7 @@
           <p class="kicker">Adopted by</p>
           <h2 id="communities-title">Communities</h2>
         </div>
-        <div class="communities-grid">
+        <div class="communities-grid" id="communities-grid">
           <div class="community-card">
             <p class="community-name">Mondaiy Coffee</p>
             <p class="community-meta">Atlanta, GA</p>
@@ -264,40 +269,65 @@
           </div>
         </div>
         <p class="communities-add-cta">
-          Want to add your community? <a href="https://github.com/agautsc/declaration-of-innovation/issues/new?template=add-community.yml">Open a GitHub issue →</a>
+          Want to add your community? <a href="#sign" data-sign-as="community">Sign as a community →</a>
         </p>
       </section>
 
       <section id="sign" class="sign-section" aria-labelledby="sign-title">
         <div class="sign-content">
-          <p class="kicker">Public commitment</p>
-          <h2 id="sign-title">Sign the Declaration</h2>
-          <p>
-            A signature can come from a person, meetup, project, venue, chapter, or event. Add your
-            name, place, and one sentence about the bond you are strengthening.
-          </p>
-          <div class="community-adopt">
-            <p class="community-adopt-label">Adopting as a community?</p>
-            <p class="community-adopt-desc">Open a GitHub issue with your community name, location, and a one-line description. We'll add you to the communities list.</p>
-            <a class="button" href="https://github.com/agautsc/declaration-of-innovation/issues/new?template=add-community.yml">Add Your Community →</a>
+          <div class="sign-intro">
+            <p class="kicker">Public commitment</p>
+            <h2 id="sign-title">Sign the Declaration</h2>
+            <p>
+              A signature can come from a person, meetup, project, venue, chapter, or event. Add your
+              name, place, and one sentence about the bond you are strengthening.
+            </p>
+            <p>
+              No account needed. Communities that sign join the list above; people join the
+              signatories below. Each one goes up after a quick review.
+            </p>
           </div>
-          <form class="sign-form" id="sign-form">
+          <form class="sign-form" id="sign-form" method="post" action="https://declaration-sign.gautsch.workers.dev/sign">
+            <fieldset class="sign-kind">
+              <legend>Signing as</legend>
+              <label class="choice"><input type="radio" name="kind" value="person" checked> A person</label>
+              <label class="choice"><input type="radio" name="kind" value="community"> A community or group</label>
+            </fieldset>
             <label>
-              Name or community
-              <input name="name" type="text" placeholder="Mondaiy Coffee">
+              Name
+              <input name="name" type="text" maxlength="100" required autocomplete="name" placeholder="Jordan Lee">
             </label>
             <label>
               Location
-              <input name="location" type="text" placeholder="Atlanta, GA">
+              <input name="location" type="text" maxlength="100" required placeholder="Atlanta, GA">
             </label>
             <label>
               What bond are you strengthening?
-              <textarea name="commitment" rows="4" placeholder="We gather to make the first step easier."></textarea>
+              <textarea name="statement" rows="3" maxlength="280" required placeholder="I follow up when I say I will."></textarea>
             </label>
-            <button class="button primary" type="submit">Sign via GitHub</button>
-            <p class="sign-note">Signing opens a prefilled GitHub issue. Your signature becomes part of the public record.</p>
+            <label>
+              <span>Link <span class="optional">(optional)</span></span>
+              <input name="link" type="url" maxlength="200" inputmode="url" placeholder="https://">
+            </label>
+            <div class="hp" aria-hidden="true">
+              <label>Leave this empty <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+            </div>
+            <button class="button primary" type="submit">Sign the Declaration</button>
+            <p class="sign-status" id="sign-status" role="status" aria-live="polite"></p>
+            <p class="sign-note">
+              Your name, place, and sentence become part of the public record. Prefer GitHub?
+              <a href="https://github.com/agautsc/declaration-of-innovation/issues/new/choose">Open an issue</a>.
+            </p>
           </form>
         </div>
+      </section>
+
+      <section id="signatories" class="signatories-section" aria-labelledby="signatories-title" hidden>
+        <div class="section-heading">
+          <p class="kicker">Signed by</p>
+          <h2 id="signatories-title">Signatories</h2>
+        </div>
+        <ol class="signatories-list" id="signatories-list"></ol>
       </section>
 
       <section id="badge" class="badge-section" aria-labelledby="badge-title">
@@ -344,21 +374,99 @@
       </div>
     </footer>
     <script>
-      document.getElementById('sign-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        var name = this.elements.name.value.trim();
-        var location = this.elements.location.value.trim();
-        var commitment = this.elements.commitment.value.trim();
-        var title = 'Signature: ' + (name || 'new signer');
-        var body =
-          '**Name or community:** ' + name + '\n' +
-          '**Location:** ' + location + '\n\n' +
-          '**What bond are you strengthening?**\n' + commitment;
-        var url = 'https://github.com/agautsc/declaration-of-innovation/issues/new' +
-          '?title=' + encodeURIComponent(title) +
-          '&body=' + encodeURIComponent(body);
-        window.open(url, '_blank', 'noopener');
+      var signForm = document.getElementById('sign-form');
+      var signStatus = document.getElementById('sign-status');
+      var placeholders = {
+        person: { name: 'Jordan Lee', statement: 'I follow up when I say I will.' },
+        community: { name: 'Mondaiy Coffee', statement: 'We gather to make the first step easier.' }
+      };
+
+      function setKind(kind) {
+        signForm.elements.kind.value = kind;
+        signForm.elements.name.placeholder = placeholders[kind].name;
+        signForm.elements.statement.placeholder = placeholders[kind].statement;
+      }
+
+      signForm.addEventListener('change', function (e) {
+        if (e.target.name === 'kind') setKind(e.target.value);
       });
+
+      document.querySelectorAll('[data-sign-as]').forEach(function (link) {
+        link.addEventListener('click', function () { setKind(link.getAttribute('data-sign-as')); });
+      });
+
+      // Without JavaScript the form posts straight to the endpoint, which answers with its own page.
+      signForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var button = signForm.querySelector('button[type="submit"]');
+        button.disabled = true;
+        button.textContent = 'Signing…';
+        signStatus.className = 'sign-status';
+        signStatus.textContent = '';
+        fetch(signForm.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(signForm)
+        })
+          .then(function (res) { return res.json(); })
+          .then(function (result) {
+            signStatus.textContent = result.message;
+            signStatus.classList.add(result.ok ? 'is-ok' : 'is-error');
+            if (result.ok) {
+              signForm.reset();
+              setKind('person');
+            }
+          })
+          .catch(function () {
+            signStatus.textContent = 'That did not go through. Please try again in a minute.';
+            signStatus.classList.add('is-error');
+          })
+          .then(function () {
+            button.disabled = false;
+            button.textContent = 'Sign the Declaration';
+          });
+      });
+
+      // Approved signatures, rebuilt from GitHub issues by .github/workflows/sync-signatures.yml.
+      function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text) node.textContent = text;
+        return node;
+      }
+
+      function linkTo(href, text, className) {
+        var a = el('a', className, text);
+        a.href = href;
+        a.rel = 'nofollow ugc';
+        return a;
+      }
+
+      fetch('signatures.json')
+        .then(function (res) { return res.ok ? res.json() : { signatures: [] }; })
+        .then(function (data) {
+          var communities = document.getElementById('communities-grid');
+          var list = document.getElementById('signatories-list');
+          data.signatures.forEach(function (s) {
+            var link = /^https?:\/\//i.test(s.link) ? s.link : '';
+            if (s.kind === 'community') {
+              var card = el('div', 'community-card');
+              card.appendChild(el('p', 'community-name', s.name));
+              card.appendChild(el('p', 'community-meta', s.location));
+              card.appendChild(el('p', 'community-desc', s.statement));
+              if (link) card.appendChild(linkTo(link, link.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, '') + ' →', 'community-link'));
+              communities.appendChild(card);
+            } else {
+              var item = el('li', 'signatory');
+              item.appendChild(link ? linkTo(link, s.name, 'signatory-name') : el('p', 'signatory-name', s.name));
+              item.appendChild(el('p', 'signatory-meta', s.location));
+              item.appendChild(el('p', 'signatory-statement', '“' + s.statement + '”'));
+              list.appendChild(item);
+            }
+          });
+          if (list.children.length) document.getElementById('signatories').hidden = false;
+        })
+        .catch(function () {});
 
       document.getElementById('copy-badge').addEventListener('click', function () {
         var button = this;
@@ -372,9 +480,9 @@
           scratch.value = snippet;
           document.body.appendChild(scratch);
           scratch.select();
-          document.execCommand('copy');
+          var copied = document.execCommand('copy');
           document.body.removeChild(scratch);
-          confirmCopied();
+          if (copied) confirmCopied();
         }
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(snippet).then(confirmCopied, legacyCopy);
